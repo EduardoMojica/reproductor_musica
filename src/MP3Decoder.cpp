@@ -13,7 +13,8 @@ MP3Decoder::MP3Decoder()
 void MP3Decoder::cargar(const std::string &archivo)
 {
     stopThread();
-    if (loaded) {
+    if (loaded)
+    {
         UnloadMusicStream(music);
     }
     this->archivo = archivo;
@@ -29,13 +30,12 @@ void MP3Decoder::reproducir()
         stopThread(); // Por si el usuario hace "play" varias veces
         running = true;
         updaterThread = std::thread([this]()
-        {
+                                    {
             while (running && IsMusicStreamPlaying(music)) {
                 UpdateMusicStream(music);
                 std::this_thread::sleep_for(std::chrono::milliseconds(50));
             }
-            running = false;
-        });
+            running = false; });
         std::cout << "Reproduciendo MP3: " << archivo << std::endl;
     }
 }
@@ -84,7 +84,8 @@ bool MP3Decoder::estaReproduciendo() const
 
 void MP3Decoder::setProgreso(float progress)
 {
-    if (loaded && music.stream.sampleRate > 0) {
+    if (loaded && music.stream.sampleRate > 0)
+    {
         float totalSec = GetMusicTimeLength(music);
         // SeekMusicStream está en Raylib 4.5+
         SeekMusicStream(music, totalSec * progress);

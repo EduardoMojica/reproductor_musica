@@ -1,12 +1,11 @@
 #include "MusicPlayerUI.h"
 #include "raylib.h"
 #include <string>
-<<<<<<< HEAD
 #include <vector>
 #include <cmath>
 #include <cstdlib>
 
-// Dibuja botones redondeados con hover
+// Dibuja botón redondeado con hover
 void drawButton(Rectangle rect, const char *text, Color base, Color hover, bool isHovered)
 {
     DrawRectangleRounded(rect, 0.5f, 10, isHovered ? hover : base);
@@ -14,7 +13,7 @@ void drawButton(Rectangle rect, const char *text, Color base, Color hover, bool 
     DrawText(text, rect.x + (rect.width - textWidth) / 2, rect.y + 10, 18, DARKBLUE);
 }
 
-// Dibuja visualizador tipo barra animada
+// Dibuja visualizador animado
 void drawVisualizer(Rectangle rect, int bars, float animTime)
 {
     int barWidth = (rect.width - (bars + 1) * 4) / bars;
@@ -71,7 +70,7 @@ void MusicPlayerUI::iniciar(MusicPlayer &player)
 
     float volume = 0.7f;
     float progress = 0.0f;
-    float duration = 1.0f; // Cambia esto por la duración real si tienes acceso
+    float duration = 1.0f; // Puedes sustituir por duración real si lo implementas
 
     float animTime = 0;
 
@@ -82,7 +81,7 @@ void MusicPlayerUI::iniciar(MusicPlayer &player)
         BeginDrawing();
         ClearBackground(fondoXP);
 
-        // Visualizador
+        // Visualizador central
         DrawRectangleRounded(vis, 0.20f, 18, ColorAlpha(LIGHTGRAY, 0.25f));
         drawVisualizer(vis, 32, animTime);
 
@@ -104,15 +103,14 @@ void MusicPlayerUI::iniciar(MusicPlayer &player)
             DrawText(txt.c_str(), ancho / 2 - width / 2, infoY, 26, YELLOW);
         }
 
-        // ----- BARRA DE PROGRESO INTERACTIVA -----
+        // Barra de progreso interactiva
         DrawRectangleRounded(progBar, 0.5f, 8, DARKBLUE);
         DrawRectangleRounded((Rectangle){progBar.x, progBar.y, progress * progBar.width, progBar.height}, 0.5f, 8, SKYBLUE);
 
-        // Tiempos (simulados: pon aquí los reales si los tienes)
         DrawText("00:00", progBar.x, progBar.y + 18, 16, WHITE);
         DrawText("03:45", progBar.x + progBar.width - 55, progBar.y + 18, 16, WHITE);
 
-        // ----- BOTONES -----
+        // Botones de control
         Vector2 mouse = GetMousePosition();
         for (int i = 0; i < btns.size(); ++i)
         {
@@ -120,7 +118,7 @@ void MusicPlayerUI::iniciar(MusicPlayer &player)
             drawButton(btns[i], icons[i], baseBtn, hoverBtn, hovered);
         }
 
-        // ----- BARRA DE VOLUMEN -----
+        // Barra de volumen centrada debajo de los botones
         DrawText("Volumen", volBar.x - 100, volBar.y - 2, 20, WHITE);
         DrawRectangleRounded(volBar, 0.5f, 8, SKYBLUE);
         DrawRectangleRounded((Rectangle){volBar.x, volBar.y, volume * volBar.width, volBar.height}, 0.5f, 8, YELLOW);
@@ -129,7 +127,7 @@ void MusicPlayerUI::iniciar(MusicPlayer &player)
         // Interacciones
         if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
         {
-            // BARRA DE PROGRESO: click para adelantar canción
+            // Barra de progreso interactiva
             if (CheckCollisionPointRec(mouse, progBar))
             {
                 progress = (mouse.x - progBar.x) / progBar.width;
@@ -137,8 +135,7 @@ void MusicPlayerUI::iniciar(MusicPlayer &player)
                     progress = 0;
                 if (progress > 1)
                     progress = 1;
-                // Si tienes un método para esto en tu MusicPlayer, llama aquí:
-                player.setProgreso(progress);
+                player.setProgreso(progress); // Si no tienes el método, comenta esta línea
             }
             // Botones
             if (CheckCollisionPointRec(mouse, btns[0]))
@@ -151,7 +148,7 @@ void MusicPlayerUI::iniciar(MusicPlayer &player)
                 player.detener();
             if (CheckCollisionPointRec(mouse, btns[4]))
                 player.siguiente();
-            // BARRA DE VOLUMEN
+            // Barra de volumen
             if (CheckCollisionPointRec(mouse, volBar))
             {
                 volume = (mouse.x - volBar.x) / volBar.width;
@@ -159,55 +156,8 @@ void MusicPlayerUI::iniciar(MusicPlayer &player)
                     volume = 0;
                 if (volume > 1)
                     volume = 1;
-                player.setVolumen(volume);
+                player.setVolumen(volume); // Si no tienes el método, comenta esta línea
             }
-=======
-
-void MusicPlayerUI::iniciar(MusicPlayer& player) {
-    const int ancho = 600;
-    const int alto = 400;
-    InitWindow(ancho, alto, "MeloPlayer - Raylib UI");
-    SetTargetFPS(60);
-
-    Rectangle btnPlay = { 50, 300, 80, 40 };
-    Rectangle btnPause = { 140, 300, 80, 40 };
-    Rectangle btnStop = { 230, 300, 80, 40 };
-    Rectangle btnNext = { 320, 300, 80, 40 };
-    Rectangle btnPrev = { 410, 300, 80, 40 };
-
-    while (!WindowShouldClose()) {
-        BeginDrawing();
-        ClearBackground(RAYWHITE);
-
-        Cancion* actual = player.obtenerCancionActual();
-        if (actual) {
-            DrawText(("Título: " + actual->titulo).c_str(), 20, 40, 20, DARKGRAY);
-            DrawText(("Artista: " + actual->artista).c_str(), 20, 70, 20, DARKGRAY);
-        } else {
-            DrawText("No hay canciones cargadas.", 20, 40, 20, RED);
-        }
-
-        DrawRectangleRec(btnPlay, LIGHTGRAY);
-        DrawRectangleRec(btnPause, LIGHTGRAY);
-        DrawRectangleRec(btnStop, LIGHTGRAY);
-        DrawRectangleRec(btnNext, LIGHTGRAY);
-        DrawRectangleRec(btnPrev, LIGHTGRAY);
-
-        DrawText("Play", btnPlay.x + 20, btnPlay.y + 10, 20, BLACK);
-        DrawText("Pause", btnPause.x + 15, btnPause.y + 10, 20, BLACK);
-        DrawText("Stop", btnStop.x + 20, btnStop.y + 10, 20, BLACK);
-        DrawText("Next", btnNext.x + 20, btnNext.y + 10, 20, BLACK);
-        DrawText("Prev", btnPrev.x + 20, btnPrev.y + 10, 20, BLACK);
-
-        if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) {
-            Vector2 mouse = GetMousePosition();
-
-            if (CheckCollisionPointRec(mouse, btnPlay)) player.reproducir();
-            if (CheckCollisionPointRec(mouse, btnPause)) player.pausar();
-            if (CheckCollisionPointRec(mouse, btnStop)) player.detener();
-            if (CheckCollisionPointRec(mouse, btnNext)) player.siguiente();
-            if (CheckCollisionPointRec(mouse, btnPrev)) player.anterior();
->>>>>>> 5ac8b0b436599045590fd8992c130d6267be10e9
         }
 
         EndDrawing();
