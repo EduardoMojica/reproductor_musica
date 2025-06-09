@@ -1,0 +1,39 @@
+{
+    "configurations": [
+        {
+            "name": "Win32",
+            "includePath": [
+                "${workspaceFolder}/**",
+                "C:/raylib/w64devkit/x86_64-w64-mingw32/include",
+                "C:/raylib/w64devkit/include"
+            ],
+            "defines": [
+                "_DEBUG",
+                "UNICODE",
+                "_UNICODE"
+            ],
+            "windowsSdkVersion": "10.0.22621.0",
+            "cStandard": "c17",
+            "cppStandard": "c++17"
+        },
+        {
+            "name": "ReproductorMusica",
+            "includePath": [
+                "${workspaceFolder}/**",
+                "C:/raylib/w64devkit/x86_64-w64-mingw32/include/c++/11.2.0",
+                "C:/raylib/w64devkit/x86_64-w64-mingw32/include/c++/11.2.0",
+                "C:/raylib/w64devkit/x86_64-w64-mingw32/include",
+                "C:/raylib/w64devkit/include"
+            ],
+            "defines": [
+                "_DEBUG",
+                "UNICODE",
+                "_UNICODE"
+            ],
+            "windowsSdkVersion": "10.0.22621.0",
+            "cStandard": "c17",
+            "cppStandard": "c++17"
+        }
+    ],
+    "version": 4
+}

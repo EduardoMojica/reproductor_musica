@@ -1,0 +1,43 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Build MusicPlayer",
+            "type": "shell",
+            "command": "C:/raylib/w64devkit/bin/g++.exe",
+            "args": [
+                "${workspaceFolder}/src/main.cpp",
+                "${workspaceFolder}/src/Controller.cpp",
+                "${workspaceFolder}/src/FileLoader.cpp",
+                "${workspaceFolder}/src/MusicPlayer.cpp",
+                "${workspaceFolder}/src/MusicPlayerUI.cpp",
+                "${workspaceFolder}/src/PlaybackThread.cpp",
+                "${workspaceFolder}/src/Playlist.cpp",
+                "${workspaceFolder}/src/MP3Decoder.cpp",
+                // Agrega aquí más .cpp si agregas otros nuevos
+                "-std=c++17",
+                "-g",
+                "-I",
+                "C:/raylib/raylib/include",
+                "-L",
+                "C:/raylib/raylib/lib",
+                "-lraylib",
+                "-lopengl32",
+                "-lgdi32",
+                "-lwinmm",
+                "-o",
+                "${workspaceFolder}/MusicPlayer.exe"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": [
+                "$gcc"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            }
+        }
+    ]
+}
