@@ -1,5 +1,6 @@
 #pragma once
 #include "AudioDecoder.h"
+<<<<<<< HEAD
 #include <string>
 #include <thread>
 #include <atomic>
@@ -26,4 +27,24 @@ public:
     bool estaReproduciendo() const override;
     void setProgreso(float progress) override;
     ~MP3Decoder() override;
+=======
+#include <iostream>
+
+class MP3Decoder : public AudioDecoder {
+private:
+    std::string archivo;
+public:
+    void cargar(const std::string& archivo) override {
+        this->archivo = archivo;
+    }
+    void reproducir() override {
+        std::cout << "Reproduciendo MP3: " << archivo << std::endl;
+    }
+    void pausar() override {
+        std::cout << "Pausado MP3\n";
+    }
+    void detener() override {
+        std::cout << "Detenido MP3\n";
+    }
+>>>>>>> 5ac8b0b436599045590fd8992c130d6267be10e9
 };
