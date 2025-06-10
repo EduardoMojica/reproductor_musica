@@ -14,7 +14,6 @@
                 "${workspaceFolder}/src/PlaybackThread.cpp",
                 "${workspaceFolder}/src/Playlist.cpp",
                 "${workspaceFolder}/src/MP3Decoder.cpp",
-                // Agrega aquí más .cpp si agregas otros nuevos
                 "-std=c++17",
                 "-g",
                 "-I",
