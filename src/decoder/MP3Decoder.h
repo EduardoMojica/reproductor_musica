@@ -7,7 +7,7 @@
 #include <atomic>
 
 // Decodificador de archivos MP3 usando Raylib.
-// Permite cargar, reproducir, pausar, detener y manipular el stream de audio en un hilo.
+// Permite cargar, reproducir, detener y manipular el stream de audio en un hilo.
 class MP3Decoder : public AudioDecoder
 {
 private:
@@ -31,9 +31,6 @@ public:
 
     // Llama a UpdateMusicStream (solo si NO usas hilos)
     void actualizar() override;
-
-    // Pausa la reproducción
-    void pausar() override;
 
     // Reanuda la reproducción si está pausada
     void reanudar() override;

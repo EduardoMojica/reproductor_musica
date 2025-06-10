@@ -19,9 +19,6 @@ public:
     // Actualiza el stream de audio (si es necesario)
     virtual void actualizar() = 0;
 
-    // Pausa la reproducción
-    virtual void pausar() = 0;
-
     // Reanuda la reproducción si estaba pausada
     virtual void reanudar() = 0;
 

@@ -44,14 +44,6 @@ void MP3Decoder::actualizar()
         UpdateMusicStream(music);
 }
 
-// Pausa la reproducción del stream
-void MP3Decoder::pausar()
-{
-    if (loaded)
-        PauseMusicStream(music);
-    std::cout << "Pausado MP3\n";
-}
-
 // Reanuda la reproducción del stream
 void MP3Decoder::reanudar()
 {

@@ -16,7 +16,6 @@ public:
     ~MusicPlayer();
     void cargarLista(const Playlist &p);
     void reproducir();
-    void pausar();
     void detener();
     void siguiente();
     void anterior();

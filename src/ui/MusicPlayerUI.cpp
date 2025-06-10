@@ -5,81 +5,79 @@
 #include <cmath>
 #include <cstdlib>
 
-// Dibuja botón redondeado con hover
+// Botón redondeado con hover
 void drawButton(Rectangle rect, const char *text, Color base, Color hover, bool isHovered)
 {
     DrawRectangleRounded(rect, 0.5f, 10, isHovered ? hover : base);
-    int textWidth = MeasureText(text, 18);
-    DrawText(text, rect.x + (rect.width - textWidth) / 2, rect.y + 10, 18, DARKBLUE);
+    int textWidth = MeasureText(text, 26);
+    DrawText(text, rect.x + (rect.width - textWidth) / 2, rect.y + 17, 26, DARKBLUE);
 }
 
-// Visualizador animado tipo XP
+// Visualizador
 void drawVisualizer(Rectangle rect, int bars, float animTime)
 {
-    int barWidth = (rect.width - (bars + 1) * 4) / bars;
+    int spacing = 8; // espacio entre barras
+    int barWidth = ((int)rect.width - (bars + 1) * spacing) / bars;
     for (int i = 0; i < bars; i++)
     {
-        float phase = animTime * 1.5f + i * 0.7f;
-        float height = (std::sin(phase) + 1.2f) / 2.2f * (rect.height - 20);
+        float phase = animTime * 1.2f + i * 0.35f;
+        float altura = (std::sin(phase) + 1.5f) / 2.5f * (rect.height - 20) + 28;
         Rectangle bar = {
-            rect.x + 4 + i * (barWidth + 4),
-            rect.y + rect.height - height - 10,
+            rect.x + spacing + i * (barWidth + spacing),
+            rect.y + rect.height - altura - 14,
             (float)barWidth,
-            height};
-        DrawRectangleRounded(bar, 0.3f, 6, ColorAlpha(BLUE, 0.7f));
-        DrawRectangleRoundedLines(bar, 0.3f, 6, 2, SKYBLUE);
+            altura};
+        DrawRectangleRounded(bar, 0.4f, 8, ColorAlpha(BLUE, 0.85f));
+        DrawRectangleRoundedLines(bar, 0.4f, 8, 3, SKYBLUE);
     }
 }
 
 void MusicPlayerUI::iniciar(MusicPlayer &player)
 {
-    const int ancho = 900, alto = 700;
-    InitWindow(ancho, alto, "MeloPlayer XP Edition");
+    const int ancho = 1200, alto = 900;
+    InitWindow(ancho, alto, "C++Player XP Edition");
     SetTargetFPS(60);
 
     Color fondoXP = {49, 106, 197, 255};
     Color baseBtn = {180, 215, 250, 255};
     Color hoverBtn = {200, 235, 255, 255};
 
-    // Layout visualizador
-    int visW = 420, visH = 120;
-    Rectangle vis = {ancho / 2.0f - visW / 2.0f, 120, (float)visW, (float)visH};
-    int infoY = vis.y - 70;
-    int progBarY = vis.y + vis.height + 35;
-    Rectangle progBar = {80, (float)progBarY, ancho - 160, 16};
+    // Visualizador
+    int visW = 650, visH = 220;
+    Rectangle vis = {ancho / 2.0f - visW / 2.0f, 95, (float)visW, (float)visH};
+    int infoY = vis.y - 68;
+    int progBarY = vis.y + vis.height + 32;
+    Rectangle progBar = {120, (float)progBarY, ancho - 240, 20};
 
-    // Botones de control
-    float btnW = 60, btnH = 60, gap = 24;
-    float totalBtnW = 5 * btnW + 4 * gap;
+    // Botones de control (centrados y grandes)
+    float btnW = 80, btnH = 80, gap = 34;
+    float totalBtnW = 4 * btnW + 3 * gap;
     float startX = (ancho - totalBtnW) / 2;
-    int btnY = progBar.y + 55;
+    int btnY = progBar.y + 60;
     std::vector<Rectangle> btns = {
         {startX + 0 * (btnW + gap), (float)btnY, btnW, btnH}, // Prev
         {startX + 1 * (btnW + gap), (float)btnY, btnW, btnH}, // Play
-        {startX + 2 * (btnW + gap), (float)btnY, btnW, btnH}, // Pause
-        {startX + 3 * (btnW + gap), (float)btnY, btnW, btnH}, // Stop
-        {startX + 4 * (btnW + gap), (float)btnY, btnW, btnH}  // Next
+        {startX + 2 * (btnW + gap), (float)btnY, btnW, btnH}, // Stop
+        {startX + 3 * (btnW + gap), (float)btnY, btnW, btnH}  // Next
     };
-    std::vector<const char *> icons = {"<<", ">", "||", "[]", ">>"};
+    std::vector<const char *> icons = {"<<", ">", "[]", ">>"};
 
-    // Barra de volumen centrada debajo de botones
-    float volBarW = 300, volBarH = 16;
+    // Barra de volumen centrada
+    float volBarW = 360, volBarH = 18;
     float volBarX = (ancho - volBarW) / 2;
-    float volBarY = btnY + btnH + 30;
+    float volBarY = btnY + btnH + 35;
     Rectangle volBar = {volBarX, volBarY, volBarW, volBarH};
 
     float volume = 0.7f; // Valor inicial
     float animTime = 0;
-
-    // Variables para barra de progreso
     float progress = 0.0f;
-    float duracion = 1.0f; // segundos
+    float duracion = 1.0f;
 
     while (!WindowShouldClose())
     {
         animTime += GetFrameTime();
 
-        // ---- Actualiza progreso real si hay canción ----
+        // Progreso real si hay canción
         Cancion *actual = player.obtenerCancionActual();
         if (actual && player.getDuracion() > 0)
         {
@@ -95,9 +93,9 @@ void MusicPlayerUI::iniciar(MusicPlayer &player)
         BeginDrawing();
         ClearBackground(fondoXP);
 
-        // Visualizador animado
-        DrawRectangleRounded(vis, 0.20f, 18, ColorAlpha(LIGHTGRAY, 0.25f));
-        drawVisualizer(vis, 32, animTime);
+        // Visualizador
+        DrawRectangleRounded(vis, 0.20f, 18, ColorAlpha(LIGHTGRAY, 0.23f));
+        drawVisualizer(vis, 24, animTime);
 
         // Info canción
         if (actual)
@@ -105,32 +103,32 @@ void MusicPlayerUI::iniciar(MusicPlayer &player)
             std::string tituloStr = "Título: " + actual->titulo;
             std::string artistaStr = "Artista: " + actual->artista;
             int tWidth = MeasureText(tituloStr.c_str(), 32);
-            int aWidth = MeasureText(artistaStr.c_str(), 22);
+            int aWidth = MeasureText(artistaStr.c_str(), 24);
             DrawText(tituloStr.c_str(), ancho / 2 - tWidth / 2, infoY, 32, WHITE);
-            DrawText(artistaStr.c_str(), ancho / 2 - aWidth / 2, infoY + 38, 22, SKYBLUE);
+            DrawText(artistaStr.c_str(), ancho / 2 - aWidth / 2, infoY + 36, 24, SKYBLUE);
         }
         else
         {
             std::string txt = "No hay canciones cargadas.";
             int width = MeasureText(txt.c_str(), 24);
-            DrawText(txt.c_str(), ancho / 2 - width / 2, infoY + 12, 24, YELLOW);
+            DrawText(txt.c_str(), ancho / 2 - width / 2, infoY + 10, 24, YELLOW);
         }
 
-        // Barra de progreso real
+        // Barra de progreso
         DrawRectangleRounded(progBar, 0.5f, 8, DARKBLUE);
         DrawRectangleRounded((Rectangle){progBar.x, progBar.y, progress * progBar.width, progBar.height}, 0.5f, 8, SKYBLUE);
 
-        // Muestra el tiempo transcurrido y el total
+        // Tiempos (actual y total)
         char tInit[8], tEnd[8];
         int pos = progress * duracion;
         int min1 = pos / 60, sec1 = pos % 60;
         int min2 = duracion / 60, sec2 = ((int)duracion) % 60;
         sprintf(tInit, "%02d:%02d", min1, sec1);
         sprintf(tEnd, "%02d:%02d", min2, sec2);
-        DrawText(tInit, progBar.x, progBar.y + 20, 16, WHITE);
-        DrawText(tEnd, progBar.x + progBar.width - 55, progBar.y + 20, 16, WHITE);
+        DrawText(tInit, progBar.x, progBar.y + 26, 18, WHITE);
+        DrawText(tEnd, progBar.x + progBar.width - 55, progBar.y + 26, 18, WHITE);
 
-        // Botones de control
+        // Botones de control (centrados y grandes)
         Vector2 mouse = GetMousePosition();
         for (int i = 0; i < btns.size(); ++i)
         {
@@ -138,25 +136,25 @@ void MusicPlayerUI::iniciar(MusicPlayer &player)
             drawButton(btns[i], icons[i], baseBtn, hoverBtn, hovered);
         }
 
-        // Barra de volumen centrada debajo de los botones
-        DrawText("Volumen", volBar.x - 110, volBar.y - 3, 22, WHITE);
+        // Barra de volumen
+        DrawText("Volumen", volBar.x - 115, volBar.y - 3, 24, WHITE);
         DrawRectangleRounded(volBar, 0.5f, 8, SKYBLUE);
         DrawRectangleRounded((Rectangle){volBar.x, volBar.y, volume * volBar.width, volBar.height}, 0.5f, 8, YELLOW);
-        DrawCircle(volBar.x + volume * volBar.width, volBar.y + volBar.height / 2, 11, YELLOW);
+        DrawCircle(volBar.x + volume * volBar.width, volBar.y + volBar.height / 2, 13, YELLOW);
 
-        // ----- Listado de canciones (simple, abajo) -----
-        int listY = volBar.y + 60;
+        // Listado de canciones (abajo)
+        int listY = volBar.y + 68;
         int index = 0;
         auto &lista = player.getPlaylist();
         for (const auto &c : lista.obtenerCanciones())
         {
             int isActual = (actual && actual->archivo == c.archivo);
             DrawText((std::to_string(index + 1) + ". " + c.titulo + " - " + c.artista).c_str(),
-                     80, listY + 28 * index, 20, isActual ? YELLOW : WHITE);
+                     120, listY + 30 * index, 22, isActual ? YELLOW : WHITE);
             index++;
         }
 
-        // ------ Interacciones ------
+        // Interacciones
         if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
         {
             // Barra de progreso interactiva
@@ -175,10 +173,8 @@ void MusicPlayerUI::iniciar(MusicPlayer &player)
             if (CheckCollisionPointRec(mouse, btns[1]))
                 player.reproducir();
             if (CheckCollisionPointRec(mouse, btns[2]))
-                player.pausar();
-            if (CheckCollisionPointRec(mouse, btns[3]))
                 player.detener();
-            if (CheckCollisionPointRec(mouse, btns[4]))
+            if (CheckCollisionPointRec(mouse, btns[3]))
                 player.siguiente();
             // Barra de volumen
             if (CheckCollisionPointRec(mouse, volBar))

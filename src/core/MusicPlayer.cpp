@@ -41,12 +41,6 @@ void MusicPlayer::reproducir()
     cargarYReproducirCancion();
 }
 
-// Pausa la canción actual
-void MusicPlayer::pausar()
-{
-    decoder.pausar();
-}
-
 // Detiene la reproducción actual
 void MusicPlayer::detener()
 {
