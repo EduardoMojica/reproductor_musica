@@ -26,10 +26,10 @@ public:
     // Carga un archivo MP3 al decodificador
     void cargar(const std::string &archivo) override;
 
-    // Inicia la reproducción del stream (y el hilo de actualización)
+    // Inicia la reproducción del stream y el hilo de actualización
     void reproducir() override;
 
-    // Llama a UpdateMusicStream (solo si NO usas hilos)
+    // Llama a UpdateMusicStream 
     void actualizar() override;
 
     // Reanuda la reproducción si está pausada
@@ -38,13 +38,13 @@ public:
     // Detiene el stream y el hilo
     void detener() override;
 
-    // Ajusta el volumen (de 0.0f a 1.0f)
+    // Ajusta el volumen 
     void setVolumen(float volumen) override;
 
     // Retorna true si se está reproduciendo música
     bool estaReproduciendo() const override;
 
-    // Salta a un punto del stream según el progreso (0.0 = inicio, 1.0 = fin)
+    // Salta a un punto del stream según el progreso 
     void setProgreso(float progress) override;
 
     ~MP3Decoder() override;

@@ -4,7 +4,7 @@
 #include <string>
 #include "../core/Cancion.h"
 
-// Clase encargada de escanear directorios para encontrar archivos de música (*.mp3)
+// Clase encargada de escanear directorios para encontrar archivos de música 
 // y devolver una lista de objetos Cancion.
 class FileLoader
 {

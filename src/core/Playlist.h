@@ -2,7 +2,7 @@
 #include <vector>
 #include "../core/Cancion.h"
 
-// Playlist: gestiona una lista de canciones y permite navegar entre ellas.
+//gestiona una lista de canciones y permite navegar entre ellas.
 class Playlist
 {
 private:

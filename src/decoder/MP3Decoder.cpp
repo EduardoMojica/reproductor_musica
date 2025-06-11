@@ -2,7 +2,7 @@
 #include <iostream>
 #include <chrono>
 
-// Constructor vacío: puedes inicializar aquí si lo necesitas
+// Constructor que inicializa el objeto MP3Decoder
 MP3Decoder::MP3Decoder() {}
 
 // Carga un archivo MP3 y libera el anterior si es necesario
@@ -76,7 +76,7 @@ bool MP3Decoder::estaReproduciendo() const
     return loaded && IsMusicStreamPlaying(music);
 }
 
-// Cambia el progreso de la canción (solo Raylib 4.5+)
+// Cambia el progreso de la canción 
 void MP3Decoder::setProgreso(float progress)
 {
     if (loaded && music.stream.sampleRate > 0)
